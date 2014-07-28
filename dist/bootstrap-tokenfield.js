@@ -37,7 +37,8 @@
   var Tokenfield = function (element, options) {
     var _self = this
 
-    this.$element = $(element)
+    this.$element = $(element);
+    this.$element.data('bs.tokenfield', _self);
     this.textDirection = this.$element.css('direction');
 
     // Extend options
@@ -102,7 +103,7 @@
 
     // Create a new input
     var id = this.$element.prop('id') || new Date().getTime() + '' + Math.floor((1 + Math.random()) * 100)
-    this.$input = $('<input type="text" class="token-input" autocomplete="off" />')
+    this.$input = $('<input type="'+this.options.inputType+'" class="token-input" autocomplete="off" />')
                     .appendTo( this.$wrapper )
                     .prop( 'placeholder',  this.$element.prop('placeholder') )
                     .prop( 'id', id + '-tokenfield' )
@@ -992,7 +993,7 @@
         value = data[option].apply(data, args)
       } else {
         if (!data && typeof option !== 'string' && !param) {
-          $this.data('bs.tokenfield', (data = new Tokenfield(this, options)))
+          data = new Tokenfield(this, options);
           $this.trigger('tokenfield:initialize')
         }
       }
@@ -1012,7 +1013,8 @@
     showAutocompleteOnFocus: false,
     createTokensOnBlur: false,
     delimiter: ',',
-    beautify: true
+    beautify: true,
+    inputType: 'text'
   }
 
   $.fn.tokenfield.Constructor = Tokenfield
