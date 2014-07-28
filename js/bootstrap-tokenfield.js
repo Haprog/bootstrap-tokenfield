@@ -103,7 +103,7 @@
 
     // Create a new input
     var id = this.$element.prop('id') || new Date().getTime() + '' + Math.floor((1 + Math.random()) * 100)
-    this.$input = $('<input type="text" class="token-input" autocomplete="off" />')
+    this.$input = $('<input type="'+this.options.inputType+'" class="token-input" autocomplete="off" />')
                     .appendTo( this.$wrapper )
                     .prop( 'placeholder',  this.$element.prop('placeholder') )
                     .prop( 'id', id + '-tokenfield' )
@@ -1013,7 +1013,8 @@
     showAutocompleteOnFocus: false,
     createTokensOnBlur: false,
     delimiter: ',',
-    beautify: true
+    beautify: true,
+    inputType: 'text'
   }
 
   $.fn.tokenfield.Constructor = Tokenfield
