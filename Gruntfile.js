@@ -3,6 +3,8 @@ module.exports = function (grunt) {
   var semver = require('semver'),
       f = require('util').format;
 
+  grunt.util.linefeed = '\n';
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     version: '<%= pkg.version %>',
