@@ -106,7 +106,9 @@
 
         // If the value changed due to form reset then update tokens
         if (oldValue != newValue) {
-          _self.setTokens(newValue, false, false);
+          // Convert empty string to empty array because setTokens() ignores falsy values (like empty string)
+          var setValue = ( newValue === '' ? [] : newValue );
+          _self.setTokens(setValue, false, false);
         }
 
         var eventOptions = {
