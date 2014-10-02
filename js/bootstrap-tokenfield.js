@@ -95,34 +95,6 @@
       .css(hidingPosition, '-10000px')
       .prop('tabindex', -1)
 
-    // Update tokens on form reset
-    this.$element.closest('form').on('reset', function (e) {
-      var form = this;
-      var oldValue = _self.$element.val();
-
-      // Set a timeout to run code after the reset event is finished
-      window.setTimeout(function(){
-        var newValue = _self.$element.val();
-
-        // If the value changed due to form reset then update tokens
-        if (oldValue != newValue) {
-          // Convert empty string to empty array because setTokens() ignores falsy values (like empty string)
-          var setValue = ( newValue === '' ? [] : newValue );
-          _self.setTokens(setValue, false, false);
-        }
-
-        var eventOptions = {
-          attrs: {
-            oldValue: oldValue,
-            newValue: newValue
-          },
-          relatedTarget: form
-        };
-        var postResetEvent = $.Event('tokenfield:postreset', eventOptions);
-        _self.$element.trigger(postResetEvent);
-      }, 0);
-    });
-
     // Create a wrapper
     this.$wrapper = $('<div class="tokenfield form-control" />')
     if (this.$element.hasClass('input-lg')) this.$wrapper.addClass('input-lg')
@@ -465,6 +437,34 @@
             }
           }
         })
+
+      // Update tokens on form reset
+      this.$element.closest('form').on('reset', function (e) {
+        var form = this;
+        var oldValue = _self.$element.val();
+
+        // Set a timeout to run code after the reset event is finished
+        window.setTimeout(function(){
+          var newValue = _self.$element.val();
+
+          // If the value changed due to form reset then update tokens
+          if (oldValue != newValue) {
+            // Convert empty string to empty array because setTokens() ignores falsy values (like empty string)
+            var setValue = ( newValue === '' ? [] : newValue );
+            _self.setTokens(setValue, false, false);
+          }
+
+          var eventOptions = {
+            attrs: {
+              oldValue: oldValue,
+              newValue: newValue
+            },
+            relatedTarget: form
+          };
+          var postResetEvent = $.Event('tokenfield:postreset', eventOptions);
+          _self.$element.trigger(postResetEvent);
+        }, 0);
+      });
 
       // Listen to window resize
       $(window).on('resize', $.proxy(this.update, this ))
